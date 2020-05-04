@@ -2,7 +2,9 @@
 
 ## Setup
 
+- Install skaffold dev
+- Get docker and k8s running
+
 ```
-npm i
-npm start
+skaffold dev
 ```
