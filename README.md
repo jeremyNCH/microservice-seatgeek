@@ -14,6 +14,10 @@
 6. `gloud init`
 7. `gloud container clusters get-credentials <project-name-in-GCP>`
 8. In Docker-desktop, check if the `cluster` was added to the `kubernetes context`
+9. Install ingress-nginx on GCP, <https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke> and GCP will create a `load balancer` automatically
+10. In dev console, network services, load balancing, get the `IP` of the load balancer and add it to `/etc/hosts` on local as `<IP> tickets.dev`
+11. `skaffold dev`
+12. visit `tickets.dev`
 
 ## Setup on local
 
