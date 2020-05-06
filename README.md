@@ -32,6 +32,8 @@ skaffold dev
 
 ## Responses
 
+- `error-handler` middleware takes in the error, formats them and sends them back. Any error specific logic is handled by the specific error superset in `/src/errors`
+
 ### Error response format
 
 - 400 Bad Request

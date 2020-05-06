@@ -18,6 +18,7 @@ router.post(
       .withMessage('Password must be between 4 and 30 characters')
   ],
   (req: Request, res: Response) => {
+    // validationResult is result from error validation middleware
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
