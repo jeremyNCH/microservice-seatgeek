@@ -29,3 +29,37 @@
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 skaffold dev
 ```
+
+## Responses
+
+### Error response format
+
+- 400 Bad Request
+
+> Interface
+
+```
+{
+  errors: {
+    message: string,
+    field?: string
+  }[]
+}
+```
+
+> Example
+
+```
+{
+    "errors": [
+        {
+            "message": "Email must be valid",
+            "field": "email"
+        },
+        {
+            "message": "Password must be between 4 and 30 characters",
+            "field": "password"
+        }
+    ]
+}
+```
