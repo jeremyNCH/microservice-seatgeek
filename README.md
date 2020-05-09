@@ -4,6 +4,11 @@
 
 - During dev on localhost, if chrome responds with a `privacy security warning`, type `thisisunsafe`. This page is thrown by the nginx engine used in this app because it might not be using `https` or it is using `self-signed certs`.
 - The private mongodb instances for every service will be created by k8s depl on `skaffold dev`
+- Password hashing with `scrypt` instead of `bscrypt`: https://stackoverflow.com/questions/1226513/whats-the-advantage-of-scrypt-over-bcrypt
+  - scrypt requires increasingly more ram and computational power
+  - scrypt is also a derivative of PBKDF2 inside the `crypto` native module in nodeJS, making module auditing easier
+  - bcrypt (and PBKDF2) use constant, and small, amounts of memory.
+  - scrypt require 4000x more resources to run than bcrypt
 
 ## Setup in Google Cloud - Development in the cloud (DitC)
 

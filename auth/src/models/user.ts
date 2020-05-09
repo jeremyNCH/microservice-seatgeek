@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Password } from '../services/password';
 
 /**
  * Interface that describes the properties required to create a new user
@@ -35,6 +36,20 @@ const userSchema = new mongoose.Schema({
 });
 
 /**
+ * run everytime before any save, therefore we need to limit this password hash middleware to be used only when a password change is created or updated
+ * here we declare as async since mongoose still uses callbacks
+ * we use the `function` keyword instead of a `fat-arrow` to get access to the userDoc with `this` keyword instead of the User.ts context
+ * call done() when done to tell mongoose that we are done with the async work
+ */
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+  }
+  done();
+});
+
+/**
  *
  * @param attrs user arguments as described in UserAttrs
  * Add build function to UserModel/mongoose prototype => User.build(Attrs)
@@ -45,10 +60,5 @@ userSchema.statics.build = (attrs: UserAttrs) => {
 };
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
-
-User.build({
-  email: 'test@test.com',
-  password: 'password'
-});
 
 export { User };
