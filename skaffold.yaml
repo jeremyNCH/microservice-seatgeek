@@ -10,7 +10,7 @@ build:
   googleCloudBuild:
     projectId: microservice-tickets-dev
   artifacts:
-    - image: us.gcr.io/microservice-tickets-dev/auth
+    - image: gcr.io/microservice-tickets-dev/auth
       context: auth
       docker:
         dockerfile: Dockerfile
