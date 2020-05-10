@@ -10,7 +10,6 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
-import e from 'express';
 
 const app = express();
 // tell express that it is behind a https proxy of ingress-nginx and to trust it
