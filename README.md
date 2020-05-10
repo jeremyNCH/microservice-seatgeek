@@ -48,6 +48,13 @@
   Auto managed by browser                             | Managed manually by devs
 ```
 
+### How to create a secret for our JWT signing key
+
+- Create the secret k8s object inside our cluster. It will be available in our pods as ENV_VARIABLE inside the container running the specific service
+- `kubectl create secret generic <secret-name> --from-literal=<key>=<value>`
+  - e.g: `k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue`
+  - `k get secrets` to get all secrets
+
 ## Setup in Google Cloud - Development in the cloud (DitC)
 
 1. Create a new GCP account at <cloud.google.com/free> to get a free \$300 credit
@@ -61,7 +68,8 @@
 9. Install ingress-nginx on GCP, <https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke> and GCP will create a `load balancer` automatically
 10. In dev console, network services, load balancing, get the `IP` of the load balancer and add it to `/etc/hosts` on local as `<IP> tickets.dev`
 11. `skaffold dev`
-12. visit `tickets.dev`
+12. Create and apply secrets: `k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue`
+13. visit `tickets.dev`
 
 ## Setup on local
 

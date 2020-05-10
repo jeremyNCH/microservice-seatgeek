@@ -15,9 +15,15 @@ spec:
       containers:
         - name: auth
           image: gcr.io/microservice-tickets-dev/auth
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
           # resources:
           #   limits:
-          #     memory: "128Mi"
+          #     memory: "512Mi"
           #     cpu: "500m"
 ---
 apiVersion: v1

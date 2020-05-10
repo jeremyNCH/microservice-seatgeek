@@ -44,7 +44,7 @@ router.post(
         id: user.id,
         email: user.email
       },
-      'ChangeThisPrivateKey'
+      process.env.JWT_KEY!
     );
 
     // Store it on session object
