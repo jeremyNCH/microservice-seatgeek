@@ -34,6 +34,7 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 ## Note
 
+- This repo contains an e-commerce microservice platform built using a `Reactive / event-driven` approach. Transactions are made using `Stripe.js`
 - During dev on localhost, if chrome responds with a `privacy security warning`, type `thisisunsafe`. This page is thrown by the nginx engine used in this app because it might not be using `https` or it is using `self-signed certs`.
 - The private mongodb instances for every service will be created by k8s depl on `skaffold dev`
 - Password hashing with `scrypt` instead of `bscrypt`: https://stackoverflow.com/questions/1226513/whats-the-advantage-of-scrypt-over-bcrypt
