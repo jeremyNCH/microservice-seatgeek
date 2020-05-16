@@ -25,6 +25,7 @@ kind: Service
 metadata:
   name: client-srv
 spec:
+  type: ClusterIP
   selector:
     app: client
   ports:

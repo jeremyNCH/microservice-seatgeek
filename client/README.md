@@ -22,6 +22,12 @@ If you are on GCP, a simple `skaffold dev` is enough, else if you are running on
 
 ## Notes
 
+### How to include globals such as third party packages and libraries
+
+- <https://github.com/zeit/next.js/blob/master/errors/css-global.md>
+- Whenever we navigate to a page, next imports the component and wraps it in its own default `<app />` component before rendering it
+- \_app.js overrides nextjs's default `<app />` component we do this so that we can use globals such as the bootstrap.css library
+
 ### Server side rendering issues with Auth using NextJs with a microservice architecture
 
 - Usually, a regular react app has 3 stages:
