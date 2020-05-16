@@ -9,6 +9,15 @@ The client is built using Next.js, a React Server-Side Rendering engine
   npm run dev
 ```
 
+> Go to `tickets.dev`
+
+If you are on GCP, a simple `skaffold dev` is enough, else if you are running on `local`,
+
+```
+  docker build -t <dockerhubId>/client .
+  docker push <image-name>
+```
+
 > Go to localhost:3000
 
 ## Notes
