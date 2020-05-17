@@ -146,6 +146,7 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 - Create an npm account and a public organisation
 - https://docs.npmjs.com/cli/version
+- https://www.npmjs.com/package/@jnch-microservice-tickets/common
 
 ```
   npm login
