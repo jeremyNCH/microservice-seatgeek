@@ -8,7 +8,7 @@ import axiosProxy from '../api/axios-proxy';
  * we need to fetch data from the NextJS server in getInitialProps
  */
 const LandingPage = ({ currentUser }) => {
-  return <h1>Landing page</h1>;
+  return currentUser ? <h1>Signed in</h1> : <h1>Not signed in</h1>;
 };
 
 /**
