@@ -149,7 +149,10 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 ```
   npm login
-  npm version patch/minor/major
   npm run build
+  git add .
+  git commit -m <message>
+  npm version patch/minor/major
+  git push
   npm publish --access public
 ```
