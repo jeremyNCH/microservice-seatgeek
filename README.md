@@ -127,3 +127,17 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 }
 
 ```
+
+## K8S namespaces
+
+- All services are created under the `default` namespace
+- To do inter-services communication inside the same cluster, we use ClusterIP
+- To do Cross-namespace communication, we need to reach the ingress-nginx load balancer first, then use its route rules to reach the desired service
+
+  > k get namespace, returns ingress-nginx
+
+  > k get services -n <name-of-namespace>, eg: k get services -n ingress-nginx, returns ingress-nginx-controller
+
+  > http://<NameOfLoadBalancerService>.<Namespace>.svc.cluster.local/<endpoint>
+
+  > http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/user/currentuser
