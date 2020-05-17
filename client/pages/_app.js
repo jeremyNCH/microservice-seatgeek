@@ -1,11 +1,36 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import axiosProxy from '../api/axios-proxy';
+
+const AppComponent = ({ Component, pageProps, currentUser }) => {
+  console.log(currentUser);
+  return (
+    <div>
+      <h1>Header {currentUser.email}</h1>
+      <Component {...pageProps} />
+    </div>
+  );
+};
 
 /**
- * Whenever we navigate to a page, next imports the component and wraps it in its own default <app /> component before rendering it
- * _app.js overrides nextjs's default <app /> component
- * we do this so that we can use globals such as the bootstrap.css library
- * https://github.com/zeit/next.js/blob/master/errors/css-global.md
+ * @params {context}
+ * _app.js is a custom component and not a NextJS Page
+ * Hence the params here are
+ *  For Components: context === {Component, ctx: {req, res}, ...}
+ *  For Pages: context === {req, res, ...}
  */
-export default ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+AppComponent.getInitialProps = async (appContext) => {
+  const childContext = appContext.ctx;
+  const { data } = await axiosProxy(childContext).get('/api/users/currentuser');
+
+  let pageProps = {};
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(childContext);
+  }
+
+  return {
+    pageProps,
+    ...data
+  };
 };
+
+export default AppComponent;

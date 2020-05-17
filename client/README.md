@@ -45,3 +45,20 @@ If you are on GCP, a simple `skaffold dev` is enough, else if you are running on
 - Advantage of SSR:
   - SEO: Search Engine Optimization
   - Faster page load speed: better UX on older or mobile devices with low processing power
+
+### GOTCHA
+
+- getInitialProps: make fetch data calls here to get data to build the full HTML page during an SSR cycle.
+  - requests are made from the NextJS server and not the browser
+- `_app.js` will override the default `<App />` wrapper that NextJS uses
+
+- NextJS component tree
+
+```
+        <_App />
+          |
+      <Other child components>
+```
+
+- If `getInitialProps` is defined in `_app.js`, other child `getInitialProps` will NOT be called automatically
+  - You will need to call them manually from `_app.js` and propagate the data down the tree to the respective components via `props`
