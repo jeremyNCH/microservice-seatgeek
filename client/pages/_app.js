@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import axiosProxy from '../api/axios-proxy';
+import Header from '../components/header';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
-  console.log(currentUser);
   return (
     <div>
-      <h1>Header {currentUser.email}</h1>
+      <Header currentUser={currentUser} />
       <Component {...pageProps} />
     </div>
   );
