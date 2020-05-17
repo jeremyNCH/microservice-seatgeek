@@ -157,3 +157,6 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   git push
   npm publish --access public
 ```
+
+- To update common module in other services
+  > npm update @jnch-microservice-tickets/common
