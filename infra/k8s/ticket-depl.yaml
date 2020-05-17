@@ -16,6 +16,8 @@ spec:
         - name: ticket
           image: gcr.io/microservice-tickets-dev/ticket
           env:
+            - name: MONGO_URI
+              value: "mongodb://ticket-mongo-srv:27017/ticket"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
