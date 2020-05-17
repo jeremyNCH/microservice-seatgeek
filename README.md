@@ -141,3 +141,15 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   > http://<NameOfLoadBalancerService>.<Namespace>.svc.cluster.local/<endpoint>
 
   > http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/user/currentuser
+
+## npm packages - how to build and publish the common library
+
+- Create an npm account and a public organisation
+- https://docs.npmjs.com/cli/version
+
+```
+  npm login
+  npm version patch/minor/major
+  npm run build
+  npm publish --access public
+```
