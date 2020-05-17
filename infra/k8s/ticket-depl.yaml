@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticket-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticket
+  template:
+    metadata:
+      labels:
+        app: ticket
+    spec:
+      containers:
+        - name: ticket
+          image: gcr.io/microservice-tickets-dev/ticket
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+          # resources:
+          #   limits:
+          #     memory: "512Mi"
+          #     cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticket-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: ticket
+  ports:
+    - name: ticket
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

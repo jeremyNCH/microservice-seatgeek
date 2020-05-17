@@ -18,6 +18,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: gcr.io/microservice-tickets-dev/ticket
+      context: ticket
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
     - image: gcr.io/microservice-tickets-dev/client
       context: client
       docker:
