@@ -9,6 +9,8 @@ import {
 } from '@jnch-microservice-tickets/common';
 import { createTicketRouter } from './routes/new';
 import { showTicketRouter } from './routes/show';
+import { updateTicketRouter } from './routes/update';
+import { indexTicketRouter } from './routes/index';
 
 const app = express();
 // tell express that it is behind a https proxy of ingress-nginx and to trust it
@@ -28,6 +30,8 @@ app.use(currentUser);
 
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(updateTicketRouter);
+app.use(indexTicketRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
