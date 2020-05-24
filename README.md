@@ -21,6 +21,7 @@
 - Install skaffold dev
 - Install ingress-nginx <https://kubernetes.github.io/ingress-nginx/deploy/>
 - Get docker and k8s running
+- To restart ts-node-dev server, enter `rs` in the terminal window
 
 ```
 
@@ -160,3 +161,37 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 - To update common module in other services
   > npm update @jnch-microservice-tickets/common
+
+## EVENT BUS with NATS streaming server
+
+- <https://docs.nats.io/nats-streaming-server/changes>
+- <https://hub.docker.com/_/nats-streaming>
+
+### Setup
+
+#### Local
+
+```
+  npm i
+  npm run publish
+  npm run listen
+```
+
+### Port Forwarding to make the pod accessible during dev in local/GCP K8S
+
+```
+  kubectl get pods
+  kubectl port-forward <nats-pod-name> 4222:4222
+  kubectl port-forward <nats-pod-name> 8222:8222
+```
+
+To access the monitoring page
+
+> goto localhost:8222/streaming
+
+### NATS server health check
+
+- In `nats-depl.yaml` k8s deployment file, we have 3 `hb: heartbeat` arguments in `arg` of
+  - `-hbi`: How often NATS will make a health request to each of its client
+  - `-hbt`: How long each client has to respond
+  - `-hbf`: How many times each client can fail until NATS assume they are down/unhealthy
