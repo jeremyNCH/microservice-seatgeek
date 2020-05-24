@@ -6,6 +6,7 @@ import {
 } from '@jnch-microservice-tickets/common';
 
 import { Ticket } from '../models/ticket';
+import { TicketCreatedPublisher } from '../events/publishers/ticket-created-publisher';
 
 const router = express.Router();
 
@@ -27,6 +28,14 @@ router.post(
     });
 
     await ticket.save();
+
+    // use value from ticket that was saved since those values were validated by mongoose
+    await new TicketCreatedPublisher(client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId
+    });
 
     res.status(201).send(ticket);
   }
