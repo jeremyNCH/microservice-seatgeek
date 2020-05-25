@@ -8,6 +8,9 @@ import {
   validateRequest
 } from '@jnch-microservice-tickets/common';
 
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { natsClient } from '../nats-client';
+
 const router = express.Router();
 
 router.put(
@@ -36,6 +39,13 @@ router.put(
     });
 
     await ticket.save();
+
+    new TicketUpdatedPublisher(natsClient.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId
+    });
 
     res.send(ticket);
   }
