@@ -7,10 +7,10 @@ import {
   NotFoundError,
   currentUser
 } from '@jnch-microservice-tickets/common';
-import { createTicketRouter } from './routes/new';
-import { showTicketRouter } from './routes/show';
-import { updateTicketRouter } from './routes/update';
-import { indexTicketRouter } from './routes/index';
+import { createOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { deleteOrderRouter } from './routes/delete';
+import { indexOrderRouter } from './routes/index';
 
 const app = express();
 // tell express that it is behind a https proxy of ingress-nginx and to trust it
@@ -28,10 +28,10 @@ app.use(
 // set currentUser to request object, need to call before require-auth middleware
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(updateTicketRouter);
-app.use(indexTicketRouter);
+app.use(createOrderRouter);
+app.use(showOrderRouter);
+app.use(deleteOrderRouter);
+app.use(indexOrderRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
