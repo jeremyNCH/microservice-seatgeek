@@ -185,6 +185,8 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 - <https://docs.nats.io/nats-streaming-server/changes>
 - <https://hub.docker.com/_/nats-streaming>
 
+- This repo uses the `nats-pod-name` as the nats `client-id` in `nats.connect(clusterId, clientId, { nats-cluster-ip });` as described in `ticket-depl.yaml` and `/ticket/index.ts`
+
 ### Setup
 
 #### Local
