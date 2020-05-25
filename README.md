@@ -11,10 +11,10 @@
 7. `gloud container clusters get-credentials <project-name-in-GCP>`
 8. In Docker-desktop, check if the `cluster` was added to the `kubernetes context`
 9. Install ingress-nginx on GCP, <https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke> and GCP will create a `load balancer` automatically
-10. In dev console, network services, load balancing, get the `IP` of the load balancer and add it to `/etc/hosts` on local as `<IP> tickets.dev`
+10. In dev console, network services, load balancing, get the `IP` of the load balancer and add it to `/etc/hosts` on local as `<IP> buytickets.dev`
 11. `skaffold dev`
 12. Create and apply secrets: `k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue`
-13. visit `https://tickets.dev`
+13. visit `https://buytickets.dev`
 
 ## Setup on local
 
@@ -77,12 +77,12 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 - Usually, a regular react app has 3 stages:
 
-  1. Initial request to `tickets.dev`: fetch boilerplate html
+  1. Initial request to `buytickets.dev`: fetch boilerplate html
   2. 2nd request: fetch react scripts with rendering logic
   3. 3rd request: Auth + fetch data from resource API
 
 - NextJS will try to build the full html page with all the content and send it back with only a `single` initial request
-  - Client request `tickets.dev`
+  - Client request `buytickets.dev`
   - NextJS makes call to API to get data, builds the `fully` rendered html with content and returns it
 - Calling the API resources needs Auth+Authz with JWT, but we cannot attach any headers or body content with the initial request to auth the user in
   - `Solution`: Attach `JWT` to a `cookie` in the initial request with npm module `cookie-session`

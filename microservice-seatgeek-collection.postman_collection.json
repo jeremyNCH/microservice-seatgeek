@@ -21,10 +21,10 @@
 					"raw": "{\n\t\"title\": \"nice title\",\n\t\"price\": 10\n}"
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/tickets",
+					"raw": "https://buytickets.dev/api/tickets",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -51,10 +51,10 @@
 					"raw": "{\n\t\"title\": \"updated title\",\n\t\"price\": 20\n}"
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/tickets/:id",
+					"raw": "https://buytickets.dev/api/tickets/:id",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -84,10 +84,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://tickets.dev/api/tickets/:id",
+					"raw": "https://buytickets.dev/api/tickets/:id",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -117,10 +117,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://tickets.dev/api/tickets",
+					"raw": "https://buytickets.dev/api/tickets",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -147,10 +147,10 @@
 					"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"password\"\n}"
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/users/signup",
+					"raw": "https://buytickets.dev/api/users/signup",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -178,10 +178,10 @@
 					"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"password\"\n}"
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/users/signin",
+					"raw": "https://buytickets.dev/api/users/signin",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -212,10 +212,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/users/currentuser",
+					"raw": "https://buytickets.dev/api/users/currentuser",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
@@ -243,10 +243,10 @@
 					"raw": "{\n\t\"email\": \"test6@gmail.com\",\n\t\"password\": \"password\"\n}"
 				},
 				"url": {
-					"raw": "https://tickets.dev/api/users/signout",
+					"raw": "https://buytickets.dev/api/users/signout",
 					"protocol": "https",
 					"host": [
-						"tickets",
+						"buytickets",
 						"dev"
 					],
 					"path": [
