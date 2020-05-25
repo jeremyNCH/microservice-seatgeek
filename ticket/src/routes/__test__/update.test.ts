@@ -2,6 +2,8 @@ import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
 
+import { natsClient } from '../../nats-client';
+
 const title = 'nice title';
 const price = 20;
 
@@ -78,4 +80,19 @@ it('updates the ticket provided valid inputs', async () => {
 
   expect(updatedResponse.body.title).toEqual('updated title');
   expect(updatedResponse.body.price).toEqual(100);
+});
+
+it('publishes an event', async () => {
+  const cookie = global.signin();
+
+  const response = await createTicket(cookie).expect(201);
+
+  await putTicket(response.body.id, 'updated title', 100, cookie).expect(200);
+
+  const updatedResponse = await getTicket(response.body.id);
+
+  expect(updatedResponse.body.title).toEqual('updated title');
+  expect(updatedResponse.body.price).toEqual(100);
+
+  expect(natsClient.client.publish).toHaveBeenCalled();
 });
