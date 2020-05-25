@@ -33,6 +33,35 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 ```
 
+## Cutting some corners - FEATURES NOT YET IMPLEMENTED IN THIS REPO
+
+### 1. Future Auth+Authz enhancement
+
+- In this project, authentication is done using a JWT that is passed around in the services.
+- Currently, each service can verify the validity of a JWT but cannot determine whether someone has the required `Authorization level`
+- Ideally, we should handle both Auth and Authz -> this will be done in the future
+  - Add `expiration` to JWT
+  - If JWT is expired, refresh by calling Auth service
+  - To fix authorization issue where some users might have their access removed but still have a valid JWT:
+    - Add `UserBanned` event to `EVENT_BUS` and broadcast it to all services
+    - All services will have a `cache` ideally using `redis` that will persist the `Banned User` for a duration of the `expiration` time of the JWT
+
+### 2. Event failure and transaction rollback
+
+- After a service persist data into its own database, it will usually publish an event like `ticket:created` to notify other services
+- However, if the event fails to go through event with retries, like `NATS-streaming-server` going down permanently, other state of other services will not be updated
+- **SOLUTION:**
+  - Implement a `transaction` feature similar to a `database transaction` whereby if anything fails during the series of actions in the transaction, it is marked as `failed` and all previous state changes are `rolled back`.
+  - `Service A` stores both its data and the events it wants to publish in 2 separate collection
+  - An external listener is setup which get triggered when a new update is made to the `events collection` of service A
+  - The external listener then publishes the new event to NATS which publish them to any service listening to that topic
+  - The event is marked as `success/failed` by the external listener
+  - If `failed`, the whole `transaction rolls back`
+- **Example: a user deposits \$X to his account**
+  - The records of his action is updated by the records service which then publish and event to update the account balance state/service
+  - NATS connection lost and event never goes through
+  - even though the record says the deposit got through, the user never sees an update to his account balance => **BAD**
+
 ## Note
 
 - This repo contains an e-commerce microservice platform built using a `Reactive / event-driven` approach. Transactions are made using `Stripe.js`
@@ -43,17 +72,6 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   - scrypt is also a derivative of PBKDF2 inside the `crypto` native module in nodeJS, making module auditing easier
   - bcrypt (and PBKDF2) use constant, and small, amounts of memory.
   - scrypt require 4000x more resources to run than bcrypt
-
-### Cutting some corners - Future Auth+Authz enhancement
-
-- In this project, authentication is done using a JWT that is passed around in the services.
-- Currently, each service can verify the validity of a JWT but cannot determine whether someone has the required `Authorization level`
-- Ideally, we should handle both Auth and Authz -> this will be done in the future
-  - Add `expiration` to JWT
-  - If JWT is expired, refresh by calling Auth service
-  - To fix authorization issue where some users might have their access removed but still have a valid JWT:
-    - Add `UserBanned` event to `EVENT_BUS` and broadcast it to all services
-    - All services will have a `cache` ideally using `redis` that will persist the `Banned User` for a duration of the `expiration` time of the JWT
 
 ### Server side rendering issues with NextJs
 
