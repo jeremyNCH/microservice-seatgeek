@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@jnch-microservice-tickets/common';
+import { TicketDoc } from './ticket';
 
 /**
  * Need OrderAttrs to specify structure of incoming data
