@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { OrderStatus } from '@jnch-microservice-tickets/common';
 import { TicketDoc } from './ticket';
 
+export { OrderStatus };
+
 /**
  * Need OrderAttrs to specify structure of incoming data
  *      OrderDoc to specify structure of resulting document

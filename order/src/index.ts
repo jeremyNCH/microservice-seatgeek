@@ -8,6 +8,10 @@ const start = async () => {
     throw new Error('JWT_KEY must be defined');
   }
 
+  if (!process.env.ORDER_EXP_WINDOW) {
+    throw new Error('ORDER_EXP_WINDOW must be defined');
+  }
+
   if (!process.env.MONGO_URI) {
     throw new Error('MONGO_URI must be defined');
   }

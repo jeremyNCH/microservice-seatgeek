@@ -2,12 +2,27 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import {
   requireAuth,
-  validateRequest
+  validateRequest,
+  NotFoundError,
+  OrderStatus,
+  BadRequestError
 } from '@jnch-microservice-tickets/common';
 import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
+import { Order } from '../models/order';
 
 const router = express.Router();
 
+// 15 mins
+const EXPIRATION_WINDOW_SEC = parseInt(process.env.ORDER_EXP_WINDOW!);
+
+/**
+ * Find the ticket the user is trying to order in the db
+ * make sure that this ticket is not already reserved/locked => ticket not associated with any `not cancelled` order
+ * set an expiration date for this order
+ * create the order and save it to the order db
+ * publish order:created event
+ */
 router.post(
   '/api/orders',
   requireAuth,
@@ -20,7 +35,30 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.send({});
+    const { ticketId } = req.body;
+
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket) {
+      throw new NotFoundError();
+    }
+
+    if (await ticket.isReserved()) {
+      throw new BadRequestError('Ticket is already reserved');
+    }
+
+    const expiresAt = new Date();
+    expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SEC);
+
+    const order = Order.build({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt,
+      ticket
+    });
+
+    await order.save();
+
+    res.status(201).send(order);
   }
 );
 
