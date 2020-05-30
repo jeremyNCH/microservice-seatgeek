@@ -1,8 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Order } from '../../models/order';
 import { Ticket } from '../../models/ticket';
-import { requireAuth } from '@jnch-microservice-tickets/common';
 
 const createTicket = async () => {
   const ticket = Ticket.build({
