@@ -14,7 +14,8 @@ import { Order } from '../models/order';
 const router = express.Router();
 
 // 15 mins
-const EXPIRATION_WINDOW_SEC = parseInt(process.env.ORDER_EXP_WINDOW!);
+const EXPIRATION_WINDOW_SEC =
+  parseInt(process.env.ORDER_EXP_WINDOW!) || 15 * 60;
 
 /**
  * Find the ticket the user is trying to order in the db
