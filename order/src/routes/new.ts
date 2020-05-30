@@ -59,6 +59,8 @@ router.post(
 
     await order.save();
 
+    //emit order:created event
+
     res.status(201).send(order);
   }
 );
