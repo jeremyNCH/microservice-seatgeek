@@ -18,6 +18,12 @@ const start = async () => {
       useCreateIndex: true
     });
 
+    process.on('unhandledRejection', (reason, p) => {
+      // @ts-ignore
+      console.log('Unhandled Rejection at: Promise', p, 'reason:', reason.stack);
+      // application specific logging, throwing an error, or other logic here
+    });
+
     console.log('Connected to mongodb');
   } catch (err) {
     console.error(err);
