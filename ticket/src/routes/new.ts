@@ -1,9 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import {
-  requireAuth,
-  validateRequest
-} from '@jnch-microservice-tickets/common';
+import { requireAuth, validateRequest } from '@jnch-microservice-tickets/common';
 
 import { Ticket } from '../models/ticket';
 import { TicketCreatedPublisher } from '../events/publishers/ticket-created-publisher';
@@ -35,7 +32,8 @@ router.post(
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId
+      userId: ticket.userId,
+      version: ticket.version
     });
 
     res.status(201).send(ticket);
