@@ -1,9 +1,11 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 
 const createTicket = async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'parking',
     price: 20
   });
@@ -43,10 +45,7 @@ it('fetches orders for a particular user', async () => {
     .expect(201);
 
   // get orders from user 2 and expect those orders only
-  const response = await request(app)
-    .get('/api/orders')
-    .set('Cookie', user2)
-    .expect(200);
+  const response = await request(app).get('/api/orders').set('Cookie', user2).expect(200);
 
   expect(response.body.length).toEqual(2);
   expect(response.body[0].id).toEqual(order1.id);

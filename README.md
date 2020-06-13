@@ -107,7 +107,7 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   - e.g: `k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue`
   - `k get secrets` to get all secrets
 
-### Concurrency issues with events - Solution: Record Updates with Optimistic Concurrency Control
+### Concurrency issues with :updated events - Solution: Record Updates with Optimistic Concurrency Control
 
 - After the ticket and order services have been created and can now CRUD and persist their own and redundant data by emitting events, we observed concurrency issues where events are not always processed in order
 - Scenario: 4 instance of tickets and orders each, 200 requests doing the following:
@@ -122,6 +122,9 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   - Lookup: `Record Updates with Optimistic Concurrency Control`
   - Use npm package: `mongoose-update-if-current`: <https://www.npmjs.com/package/mongoose-update-if-current>
     - This package can implement Optimistic concurrency control with `version number` or `timestamps`
+  - In listener, query resource with both `_id` and `version` flag
+    - If not found, we are processing ticket out of order
+    - Reject event OR allow to timeout so that NATS can requeue and retry to send this event
 
 ## Responses
 
