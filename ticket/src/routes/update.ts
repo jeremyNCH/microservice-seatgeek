@@ -5,7 +5,8 @@ import {
   requireAuth,
   NotFoundError,
   NotAuthorizedError,
-  validateRequest
+  validateRequest,
+  BadRequestError
 } from '@jnch-microservice-tickets/common';
 
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
@@ -27,6 +28,11 @@ router.put(
 
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    // Check if ticket is reserved
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
     }
 
     if (ticket.userId !== req.currentUser!.id) {

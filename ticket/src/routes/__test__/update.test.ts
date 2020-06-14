@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
+import { Ticket } from '../../models/ticket';
 
 import { natsClient } from '../../nats-client';
 
@@ -95,4 +96,15 @@ it('publishes an event', async () => {
   expect(updatedResponse.body.price).toEqual(100);
 
   expect(natsClient.client.publish).toHaveBeenCalled();
+});
+
+it('rejects updates if the ticket is reserved', async () => {
+  const cookie = global.signin();
+
+  const response = await createTicket(cookie).expect(201);
+  const ticket = await Ticket.findById(response.body.id);
+  ticket!.set({ orderId: new mongoose.Types.ObjectId().toHexString() });
+  await ticket!.save();
+
+  await putTicket(response.body.id, 'updated title', 100, cookie).expect(400);
 });
