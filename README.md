@@ -33,6 +33,17 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 
 ```
 
+## Flow
+
+1. Signup and a JWT stored in a cookie will be returned in 1 go with Next.js
+2. Create a ticket with a title and a price => emit `ticket:created`
+3. Edit the ticket => emit `ticket:updated`
+4. Create a order for a ticket => emit `order:created`
+5. Ticket link with order will be locked/reserved for x mins so that no further editing can be done
+6. After x mins, expiraion service expires the order and the ticket is unlocked
+7. Expired order => emits `order:cancelled`
+8. NEED TO COMPLETE THIS FLOW
+
 ## Cutting some corners - FEATURES NOT YET IMPLEMENTED IN THIS REPO
 
 ### 1. Future Auth+Authz enhancement
