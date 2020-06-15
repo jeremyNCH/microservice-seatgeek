@@ -257,6 +257,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "createOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ticketId\": \"5ee721e965084c0018a0858b\"\n}"
+				},
+				"url": {
+					"raw": "https://buytickets.dev/api/orders",
+					"protocol": "https",
+					"host": [
+						"buytickets",
+						"dev"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

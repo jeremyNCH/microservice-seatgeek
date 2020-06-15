@@ -1,4 +1,5 @@
 import { natsClient } from './nats-client';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const start = async () => {
   if (!process.env.NATS_CLUSTER_ID) {
@@ -37,6 +38,8 @@ const start = async () => {
       console.log('Unhandled Rejection at: Promise', p, 'reason:', reason.stack);
       // application specific logging, throwing an error, or other logic here
     });
+
+    new OrderCreatedListener(natsClient.client).listen();
   } catch (err) {
     console.error(err);
   }

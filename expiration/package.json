@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jnch-microservice-tickets/common": "^1.0.8",
+    "@jnch-microservice-tickets/common": "^1.0.9",
     "@types/bull": "^3.14.0",
     "bull": "^3.14.0",
     "node-nats-streaming": "^0.3.2",
