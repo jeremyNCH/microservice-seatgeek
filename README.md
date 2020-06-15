@@ -137,6 +137,52 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
     - If not found, we are processing ticket out of order
     - Reject event OR allow to timeout so that NATS can requeue and retry to send this event
 
+## Services overview
+
+### Auth
+
+- On signup, Auth will create a JWT with no expiration and return it in a cookie
+- Has signin and signout logic
+- Need to add JWT expiration and other features from Cutting some corners - FEATURES NOT YET IMPLEMENTED IN THIS REPO
+
+### Ticket
+
+- CRUD tickets
+- Events:
+  - `ticket:created`
+  - `ticket:updated`
+- Has its own db to store all tickets
+
+### Order
+
+- CRUD orders
+- Events:
+  - `order:created`
+  - `order:cancelled`
+- Associates and locks a ticket with an order with an `orderId`
+- Locks the order for 15mins to allow for payment and waits for expiration service to free up the ticket once the order is expired
+- Once a ticket is lock, it cannot be edited and can only be purchased or expired/cancelled
+
+### Expiration
+
+- Expires orders
+- Has a webserver to listen to `order:created` and emit `expiration:complete`
+- `order:created` event payload already has a `expiresAt` property that the exp service watches and emits on expiration
+- Expiration service has no logic to process order expiration -> only emits event, it is the order service that listens to `expiration:complete` and has expiration-specific logic
+- Uses `Bull.js` to create and manage job queues
+- Jobs are stored in `redis`
+- Jobs are separately processed on a worker server
+
+### Payment
+
+- Uses `Stripe.js`
+
+### Nats Event Broker
+
+- Event broker using NATS-streaming-server
+- Makes use of queue group name to avoid duplicate event processing
+- Has event sourcing and redelivery for reliability and to allow new/restarted services to sync up their states
+
 ## Responses
 
 - `error-handler` middleware takes in the error, formats them and sends them back. Any error specific logic is handled by the specific error superset in `/src/errors`

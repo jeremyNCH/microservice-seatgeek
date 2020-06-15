@@ -13,6 +13,10 @@ const start = async () => {
     throw new Error('NATS_URL must be defined');
   }
 
+  if (!process.env.REDIS_HOST) {
+    throw new Error('REDIS_HOST must be defined');
+  }
+
   try {
     await natsClient.connect(
       process.env.NATS_CLUSTER_ID,
