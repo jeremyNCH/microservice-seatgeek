@@ -7,6 +7,7 @@ import {
   NotFoundError,
   currentUser
 } from '@jnch-microservice-tickets/common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 // tell express that it is behind a https proxy of ingress-nginx and to trust it
@@ -23,6 +24,8 @@ app.use(
 
 // set currentUser to request object, need to call before require-auth middleware
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
