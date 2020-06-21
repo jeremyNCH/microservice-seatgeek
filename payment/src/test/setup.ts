@@ -7,7 +7,7 @@ import { app } from '../app';
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): string[];
+      signin(id?: string): string[];
     }
   }
 }
@@ -43,10 +43,10 @@ afterAll(async () => {
 });
 
 // global function for all auth required tests
-global.signin = () => {
+global.signin = (id?: string) => {
   // build a JWT payload {id, email}
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com'
   };
 
