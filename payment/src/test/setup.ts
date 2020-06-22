@@ -13,6 +13,7 @@ declare global {
 }
 
 jest.mock('../nats-client');
+jest.mock('../stripe');
 
 let mongo: any;
 
