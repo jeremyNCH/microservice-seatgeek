@@ -13,12 +13,13 @@
 9. Install ingress-nginx on GCP, <https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke> and GCP will create a `load balancer` automatically
 10. In dev console, network services, load balancing, get the `IP` of the load balancer and add it to `/etc/hosts` on local as `<IP> buytickets.dev`
 11. `skaffold dev`
-12. Create and apply secrets:
+12. Create a stripe account and an API key and add the secret to k8s secrets. <https://stripe.com/docs/payments>, <https://stripe.com/docs/api>
+13. Create and apply secrets:
 
 - k create secret generic jwt-secret --from-literal JWT_KEY=ChangeThisSecretValue
 - k create secret generic stripe-secret --from-literal STRIPE_KEY=stripe_secret_key_value
 
-13. visit `https://buytickets.dev`
+14. visit `https://buytickets.dev`
 
 ## Setup on local
 
