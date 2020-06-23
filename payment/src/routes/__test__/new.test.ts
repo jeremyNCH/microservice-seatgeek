@@ -4,6 +4,7 @@ import { app } from '../../app';
 import { Order } from '../../models/order';
 import { stripe } from '../../stripe';
 import { OrderStatus } from '@jnch-microservice-tickets/common';
+import { Payment } from '../../models/payment';
 
 it('returns a 404 when purchasing an order that does not exist', async () => {
   await request(app)
@@ -80,8 +81,18 @@ it('returns a 204 with valid inputs', async () => {
     .expect(201);
 
   const chargeOpts = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+  const chargeRes = await (stripe.charges.create as jest.Mock).mock.results[0].value;
 
   expect(chargeOpts.source).toEqual('tok_visa');
   expect(chargeOpts.amount).toEqual(order.price * 100);
   expect(chargeOpts.currency).toEqual('usd');
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: chargeRes.id
+  });
+
+  expect(payment).toBeDefined;
+  expect(payment!.orderId).toEqual(order.id);
+  expect(payment!.stripeId).toEqual(chargeRes.id);
 });
