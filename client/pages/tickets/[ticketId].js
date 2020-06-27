@@ -12,16 +12,31 @@ const TicketShow = ({ ticket }) => {
   });
 
   return (
-    <div>
-      <h1>{ticket.title}</h1>
-      <h4>Price: {ticket.price}</h4>
+    <div className="table-responsive">
+      <h1>Ticket Details</h1>
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr key={ticket.id}>
+            <td>{ticket.title}</td>
+            <td>{ticket.price}</td>
+            <td>
+              {/* wrap doRequest so that onClick does Not auto-pass in the event/e object to doRequest and cause an error in use-request hook */}
+              <button onClick={(e) => doRequest()} className="btn btn-primary">
+                Purchase
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       {errors}
-
-      {/* wrap doRequest so that onClick does Not auto-pass in the event/e object to doRequest and cause an error in use-request hook */}
-      <button onClick={(e) => doRequest()} className="btn btn-primary">
-        Purchase
-      </button>
     </div>
   );
 };

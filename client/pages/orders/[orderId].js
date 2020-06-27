@@ -3,6 +3,30 @@ import StripeCheckout from 'react-stripe-checkout';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
+const OrderDetails = ({ order }) => {
+  return (
+    <div>
+      <h1>Orders</h1>
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr key={order.id}>
+            <td>{order.ticket.title}</td>
+            <td>{order.ticket.price}</td>
+            <td>{order.status}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 const OrderShow = ({ order, currentUser }) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const { doRequest, errors } = useRequest({
@@ -33,20 +57,20 @@ const OrderShow = ({ order, currentUser }) => {
     };
   }, [order]);
 
-  if (timeLeft < 0) {
-    return <div>Order Expired</div>;
-  }
-
   return (
     <div>
-      Time left to complete payment: {timeLeft} seconds
-      <StripeCheckout
-        token={({ id }) => doRequest({ token: id })}
-        stripeKey="pk_test_51GwmPYIV2KtXkt72EbYDd57eiBE1EZWIqpJEIAvaZuQl1xmUdhmJcb7VldLUgmpiPIaanu0FxoGNxpIMfSzKasnL00395FqNyR"
-        amount={order.ticket.price * 100}
-        email={currentUser.email}
-      />
-      {errors}
+      <OrderDetails order={order} />
+      {timeLeft >= 0 && <div>Time left to complete payment: {timeLeft} seconds</div> && (
+        <div>
+          <StripeCheckout
+            token={({ id }) => doRequest({ token: id })}
+            stripeKey="pk_test_51GwmPYIV2KtXkt72EbYDd57eiBE1EZWIqpJEIAvaZuQl1xmUdhmJcb7VldLUgmpiPIaanu0FxoGNxpIMfSzKasnL00395FqNyR"
+            amount={order.ticket.price * 100}
+            email={currentUser.email}
+          />
+        </div>
+      )}
+      <div>{errors}</div>
     </div>
   );
 };
