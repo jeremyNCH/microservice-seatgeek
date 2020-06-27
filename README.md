@@ -181,6 +181,8 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 ### Payment
 
 - Uses `Stripe.js`
+  - Backend: <https://www.npmjs.com/package/stripe>
+  - Frontend: <https://www.npmjs.com/package/react-stripe-checkout>
 - To test stripe:
   - Test Token: `tok_visa`,
   - VISA card: `4242424242424242`
