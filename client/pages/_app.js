@@ -6,7 +6,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
       <Header currentUser={currentUser} />
-      <Component {...pageProps} />
+      <Component currentUser={currentUser} {...pageProps} />
     </div>
   );
 };
@@ -20,11 +20,20 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
  */
 AppComponent.getInitialProps = async (appContext) => {
   const childContext = appContext.ctx;
-  const { data } = await axiosProxy(childContext).get('/api/users/currentuser');
+  const axiosClient = axiosProxy(childContext);
+  const { data } = await axiosClient.get('/api/users/currentuser');
 
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(childContext);
+    /**
+     * Pass down axios client to avoid rebuilding a new client for every request
+     * pass down currentUser to AppComponent and hence to every other children/pages since AppComponent is the root component
+     */
+    pageProps = await appContext.Component.getInitialProps(
+      childContext,
+      axiosClient,
+      data.currentUser
+    );
   }
 
   return {

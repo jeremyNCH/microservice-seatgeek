@@ -1,5 +1,3 @@
-import axiosProxy from '../api/axios-proxy';
-
 /**
  *
  * @param {props} object
@@ -17,9 +15,8 @@ const LandingPage = ({ currentUser }) => {
  * GOTCHA: getInitialProps will always run on the server on a hard reload/refresh/First time access/click on external domain link
  *         getInitialProps will run in the browser if we navigate from 1 page to another while inside the app/use next.js router
  */
-LandingPage.getInitialProps = async (context) => {
-  const { data } = await axiosProxy(context).get('/api/users/currentuser');
-  return data;
+LandingPage.getInitialProps = async (context, axiosClient, currentUser) => {
+  return {};
 };
 
 export default LandingPage;
