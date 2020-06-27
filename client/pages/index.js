@@ -1,9 +1,14 @@
+import Link from 'next/link';
+
 /**
  *
  * @param {props} object
  * This function runs inside the brower
  * we cannot fetch request and update the state of this component since it only renders once during 1 SSR cycle
  * we need to fetch data from the NextJS server in getInitialProps
+ * Note: <Link> to dynamic [ticketId] query params is pretty wild.
+ *  href: points to [ticketId].js file
+ *  as: Link templating with actual ticketId value
  */
 const LandingPage = ({ currentUser, tickets }) => {
   const ticketList = tickets.map((ticket) => {
@@ -11,6 +16,11 @@ const LandingPage = ({ currentUser, tickets }) => {
       <tr key={ticket.id}>
         <td>{ticket.title}</td>
         <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
       </tr>
     );
   });
@@ -18,11 +28,12 @@ const LandingPage = ({ currentUser, tickets }) => {
   return (
     <div>
       <h1>Tickets</h1>
-      <table className="table">
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Link</th>
           </tr>
         </thead>
         <tbody>{ticketList}</tbody>

@@ -36,6 +36,39 @@
 			"response": []
 		},
 		{
+			"name": "createPayment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderId\": \"5ef087672c78990018a11886\",\n    \"token\": \"tok_visa\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://buytickets.dev/api/payments",
+					"protocol": "https",
+					"host": [
+						"buytickets",
+						"dev"
+					],
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "putTicket",
 			"request": {
 				"method": "PUT",
