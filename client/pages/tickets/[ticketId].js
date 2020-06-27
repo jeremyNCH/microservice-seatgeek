@@ -18,7 +18,8 @@ const TicketShow = ({ ticket }) => {
 
       {errors}
 
-      <button onClick={doRequest} className="btn btn-primary">
+      {/* wrap doRequest so that onClick does Not auto-pass in the event/e object to doRequest and cause an error in use-request hook */}
+      <button onClick={(e) => doRequest()} className="btn btn-primary">
         Purchase
       </button>
     </div>

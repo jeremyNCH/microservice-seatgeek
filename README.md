@@ -181,6 +181,10 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
 ### Payment
 
 - Uses `Stripe.js`
+- To test stripe:
+  - Test Token: `tok_visa`,
+  - VISA card: `4242424242424242`
+- More on <https://stripe.com/docs/testing>
 
 ### Nats Event Broker
 
