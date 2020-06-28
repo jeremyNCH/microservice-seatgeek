@@ -1,6 +1,6 @@
 # microservice-seatgeek
 
-## Setup in Google Cloud - Development in the cloud (DitC)
+## Setup in Google Cloud (DEV ONLY) - Development in the cloud (DitC)
 
 1. Create a new GCP account at <cloud.google.com/free> to get a free \$300 credit
 2. Create a new project and a new cluster in `kubernetes engine` with `static version: 1.15.*`, `3 nodes`
@@ -336,3 +336,5 @@ To access the monitoring page
     - Github repo => settings => secrets => add secret
 - Add `Digital Ocean API key` and `Cluster Name` as secret in github
 - Add `doctl` to github container and point `kubectl` inside github to Digital Ocean => see `./github/workflows/deploy-*.yml`
+- Create `JWT_KEY` and `STRIPE_KEY` secrets inside Digital Ocean
+- Setup Ingress-Nginx inside Digital Ocean <https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean>
