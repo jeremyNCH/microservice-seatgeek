@@ -21,7 +21,7 @@ jobs:
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig $DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME
+      - run: doctl kubernetes cluster kubeconfig save $DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME
         env:
           DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME: ${{ secrets.DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME }}
       - run: kubectl rollout restart deployment auth-depl
