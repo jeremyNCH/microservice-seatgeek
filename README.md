@@ -309,3 +309,26 @@ To access the monitoring page
 
 - Mono Repo Approach
 - Automate workflow, test and build using `Github Actions` <https://help.github.com/en/actions/reference/events-that-trigger-workflows>
+  - On PR create/commits, run tests inside respective repo with new changes
+- Check `.github/workflows/tests-*.yml`
+
+### Full deployment on Digital Ocean => Cheaper at $40/month => Google search $100 credit coupon on new account
+
+- Look for a coupon and create a new Digital Ocean account
+- Create a cluster with \$10/months, 3 nodes-cluster
+- Install `doctl` at <https://github.com/digitalocean/doctl>
+  > `brew install doctl`
+- Go to Digital Ocean => API => Generate new token
+  > `doctl auth init`
+- Enter the token
+- Go to Digital Ocean => Kubernetes => `<Your_Cluster_Name>`
+- Add the K8S context to your local `kubectl`
+  > `doctl kubernetes cluster kubeconfig save <Your_Cluster_Name>`
+- List all K8S context
+  > `kubectl config view`
+- Use a different context OR if on Mac, use the docker-desktop client => kubernetes => choose the context
+  > `kubectl config use-context <Context_Name>`
+- Create github actions for continuous deployment of our services on `PR merge` to `master`
+  - Action Flow on `master` branch change:
+    - Services: Build new image => Push to docker hub => update deployment
+    - Infra: Apply all yaml files to our cluster on Digital Ocean
