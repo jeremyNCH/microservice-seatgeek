@@ -1,10 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import Head from 'next/head';
 import axiosProxy from '../api/axios-proxy';
 import Header from '../components/header';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
+      <Head>
+        <link rel="icon" href="favicon.ico" />
+      </Head>
       <Header currentUser={currentUser} />
       <div className="container">
         <Component currentUser={currentUser} {...pageProps} />
