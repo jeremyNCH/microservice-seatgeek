@@ -332,3 +332,5 @@ To access the monitoring page
   - Action Flow on `master` branch change:
     - Services: Build new image => Push to docker hub => update deployment
     - Infra: Apply all yaml files to our cluster on Digital Ocean
+  - Before creating the new workflows, Create a Github secret inside github to allow dockerhub to login
+    - Github repo => settings => secrets => add secret
