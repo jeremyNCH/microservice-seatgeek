@@ -15,5 +15,7 @@ jobs:
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig microservice-buytickets
+      - run: doctl kubernetes cluster kubeconfig save $DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME
+        env:
+          DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME: ${{ secrets.DIGITAL_OCEAN_BUYTICKETS_CLUSTER_NAME }}
       - run: kubectl apply -f infra/k8s-prod
