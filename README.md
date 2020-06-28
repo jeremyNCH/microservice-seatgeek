@@ -302,3 +302,10 @@ To access the monitoring page
   - `-hbi`: How often NATS will make a health request to each of its client
   - `-hbt`: How long each client has to respond
   - `-hbf`: How many times each client can fail until NATS assume they are down/unhealthy
+
+## Deployment and automation
+
+### Github repo approach
+
+- Mono Repo Approach
+- Automate workflow, test and build using `Github Actions` <https://help.github.com/en/actions/reference/events-that-trigger-workflows>
