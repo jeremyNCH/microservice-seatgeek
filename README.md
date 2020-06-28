@@ -78,6 +78,25 @@ k create secret generic jwt-secret --from-literal=JWT_KEY=ChangeThisSecretValue
   - NATS connection lost and event never goes through
   - even though the record says the deposit got through, the user never sees an update to his account balance => **BAD**
 
+### 3. Add HTTPS support
+
+- See <https://cert-manager.io/docs/tutorials/acme/ingress/>
+
+### 4. Add Email Service to notify users
+
+- Send email to notify users on payment:complete
+- See Mailchimp/Sendgrid
+
+### 5. Add `build` steps for prod cluster
+
+- Currently, the services are running in `dev` mode with `ts-node-dev`
+- Create additional Dockerfiles and npm commands to start service in `prod` mode
+
+### 6. Add a Staging environment
+
+- Create a staging cluster on Digital Ocean
+- Add CICD pipelines from github to the Staging cluster
+
 ## Note
 
 - This repo contains an e-commerce microservice platform built using a `Reactive / event-driven` approach. Transactions are made using `Stripe.js`
