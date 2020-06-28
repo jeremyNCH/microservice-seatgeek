@@ -334,3 +334,5 @@ To access the monitoring page
     - Infra: Apply all yaml files to our cluster on Digital Ocean
   - Before creating the new workflows, Create a Github secret inside github to allow dockerhub to login
     - Github repo => settings => secrets => add secret
+- Add `Digital Ocean API key` and `Cluster Name` as secret in github
+- Add `doctl` to github container and point `kubectl` inside github to Digital Ocean => see `./github/workflows/deploy-*.yml`
