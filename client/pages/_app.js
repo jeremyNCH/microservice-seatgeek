@@ -7,6 +7,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
       <Head>
+        <title>App under construction...</title>
         <link rel="icon" href="favicon.ico" />
       </Head>
       <Header currentUser={currentUser} />
